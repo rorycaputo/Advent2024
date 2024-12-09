@@ -25,20 +25,43 @@ public class DayEight {
         ArrayList<String> antiNodes = new ArrayList<>();
         Integer xDiff = xLoc(t1) - xLoc(t2);
         Integer yDiff = yLoc(t1) - yLoc(t2);
-        // top
-        if(xDiff <= 0 && xLoc(t1) + xDiff >= 0 && yLoc(t1) + yDiff >= 0) {
-            antiNodes.add(toLoc(xLoc(t1) + xDiff, yLoc(t1) + yDiff));
+        Integer currXLoc = xLoc(t1);
+        Integer currYLoc = yLoc(t1);
+
+        // up
+        if(xDiff <= 0) {
+            while(currXLoc >= 0 && currYLoc >= 0) {
+                antiNodes.add(toLoc(currXLoc, currYLoc));
+                currXLoc += xDiff;
+                currYLoc += yDiff;
+            }
         }
-        if(xDiff > 0 && xLoc(t1) + xDiff < width && yLoc(t1) + yDiff >= 0) {
-            antiNodes.add(toLoc(xLoc(t1) + xDiff, yLoc(t1) + yDiff));
+        if(xDiff > 0) {
+            while(currXLoc < width && currYLoc >= 0) {
+                antiNodes.add(toLoc(currXLoc, currYLoc));
+                currXLoc += xDiff;
+                currYLoc += yDiff;
+            }
         }
         
-        // bottom
-        if(xDiff <= 0 && xLoc(t2) - xDiff < width && yLoc(t2) - yDiff < height) {
-            antiNodes.add(toLoc(xLoc(t2) - xDiff, yLoc(t2) - yDiff));
+        currXLoc = xLoc(t1);
+        currYLoc = yLoc(t1);
+        currXLoc -= xDiff;
+        currYLoc -= yDiff;
+        // down
+        if(xDiff <= 0) {
+            while(currXLoc < width && currYLoc < height) {
+                antiNodes.add(toLoc(currXLoc, currYLoc));
+                currXLoc -= xDiff;
+                currYLoc -= yDiff;
+            }
         }
-        if(xDiff > 0 && xLoc(t2) - xDiff >= 0 && yLoc(t2) - yDiff < height) {
-            antiNodes.add(toLoc(xLoc(t2) - xDiff, yLoc(t2) - yDiff));
+        if(xDiff > 0) {
+            while(currXLoc >= 0 && currYLoc < height) {
+                antiNodes.add(toLoc(currXLoc, currYLoc));
+                currXLoc -= xDiff;
+                currYLoc -= yDiff;
+            }
         }
 
         // // in-between
