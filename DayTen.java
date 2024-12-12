@@ -5,24 +5,24 @@ public class DayTen {
     private static Integer height;
     private static Integer width;
     
-    private static HashSet<String> searchAt(int[][] map, Integer curX, Integer curY, Integer altitude, HashSet<String> peakCoords){
-        if(map[curX][curY] == 9){
-            peakCoords.add(curX + "," + curY);
-            return peakCoords;
-        }
+    private static Integer searchAt(int[][] map, Integer curX, Integer curY, Integer altitude, Integer rating){
         if (curX > 0 && altitude - map[curX - 1][curY] == -1){
-            peakCoords.addAll(searchAt(map, curX-1, curY, map[curX - 1][curY], peakCoords));
+            rating = (searchAt(map, curX-1, curY, map[curX - 1][curY], rating));
         }
         if (curY > 0 && altitude - map[curX][curY - 1] == -1){
-            peakCoords.addAll(searchAt(map, curX, curY - 1, map[curX][curY - 1], peakCoords));
+            rating = (searchAt(map, curX, curY - 1, map[curX][curY - 1], rating));
         }
         if (curX < width -1 && altitude - map[curX + 1][curY] == -1){
-            peakCoords.addAll(searchAt(map, curX + 1, curY, map[curX + 1][curY], peakCoords));
+            rating = (searchAt(map, curX + 1, curY, map[curX + 1][curY], rating));
         }
         if (curY < height - 1 && altitude - map[curX][curY + 1] == -1){
-            peakCoords.addAll(searchAt(map, curX, curY + 1, map[curX][curY + 1], peakCoords));
+            rating = (searchAt(map, curX, curY + 1, map[curX][curY + 1], rating));
         }
-        return peakCoords;
+        if(map[curX][curY] == 9){
+            return rating += 1;
+        } else{
+            return rating;
+        }
     }
 
     public static void main(String[] args){
@@ -57,7 +57,7 @@ public class DayTen {
             for(int curX = 0; curX < width; curX++) {
                 for(int curY = 0; curY < height; curY++){
                     if (map[curX][curY] == 0) {
-                        sum += searchAt(map, curX, curY, map[curX][curY], new HashSet<>()).size();
+                        sum += searchAt(map, curX, curY, map[curX][curY], 0);
                     }
                 }
             }
